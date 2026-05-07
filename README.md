@@ -370,7 +370,7 @@ You can contribute by:
 ## Credits
 
 Created by [realSPectr0](https://github.com/realSPectr0).
-
+Inspo from [zusqii](https://github.com/zusqii/z.startpage)
 ---
 
 ## License
