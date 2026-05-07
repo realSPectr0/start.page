@@ -1,55 +1,87 @@
-# ✦ Startpage
+<h1 align="center">Startpage</h1>
 
 <p align="center">
-  <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/f9ec2f9d-9e88-4a96-9976-71668532b84f" />
-  <img width="1663" height="1102" alt="image" src="https://github.com/user-attachments/assets/5712ae31-7e24-446e-9add-487e199eb18c" />
-  <img width="1663" height="1102" alt="image" src="https://github.com/user-attachments/assets/4ae3448d-1a72-4a59-a26d-4e6c9246acf2" />
-
+  A clean, minimal, and customizable browser startpage for a better new tab experience.
 </p>
 
-A clean, minimal, and customizable browser startpage built to make opening a new tab feel better.
-
-Startpage is designed for quick navigation, simple aesthetics, and a distraction-free workflow. It includes multiple themes, dark/light mode support, an image widget, and easy customization so you can make your browser feel more personal.
-
----
-
-## ✧ Preview
-
 <p align="center">
-  <img width="1876" height="1104" alt="Startpage Preview" src="https://github.com/user-attachments/assets/0cc3bde9-635c-4aa5-9dd6-9a41e03348bd" />
+  <a href="#features">Features</a>
+  ·
+  <a href="#preview">Preview</a>
+  ·
+  <a href="#installation">Installation</a>
+  ·
+  <a href="#customization">Customization</a>
+  ·
+  <a href="#license">License</a>
 </p>
 
----
-
-## ✧ Themes & Image Widget
-
-Startpage comes with many built-in themes, allowing you to quickly change the look and feel of your browser homepage. You can switch between different styles, customize colors, and use the image widget to make your setup feel more personal.
+<p align="center">
+  <img src="https://img.shields.io/badge/status-active-brightgreen?style=flat-square" />
+  <img src="https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20windows-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" />
+  <img src="https://img.shields.io/badge/customizable-yes-ff69b4?style=flat-square" />
+</p>
 
 <p align="center">
-  <img width="233" height="496" alt="image" src="https://github.com/user-attachments/assets/1a682997-4eed-4de2-9ced-b5a890f1a664" />
-  <img width="267" height="571" alt="image" src="https://github.com/user-attachments/assets/779ff4a8-5e55-418e-bcc5-498ad8cd4ed6" />
+  <img width="1920" height="1200" alt="Startpage Banner" src="https://github.com/user-attachments/assets/f9ec2f9d-9e88-4a96-9976-71668532b84f" />
 </p>
 
 ---
 
-## ✦ Features
+## Overview
 
-- Minimal and clean design
-- Many built-in themes
-- Dark and light mode support
-- Customizable image widget
-- Customizable layout and links
-- Fast local setup
-- Works as a browser homepage or new tab page
-- Simple install script included
-- Lightweight and distraction-free
-- Easy to personalize for your own workflow
+**Startpage** is a lightweight, customizable browser homepage designed for quick navigation, clean visuals, and a distraction-free workflow.
+
+It includes multiple built-in themes, dark and light mode support, an image widget, customizable links, and simple local setup.
 
 ---
 
-## ✦ Installation
+## Features
 
-### Linux
+| Feature | Description |
+|---|---|
+| Multiple themes | Switch between different built-in visual styles. |
+| Dark and light mode | Designed to work well in both dark and light setups. |
+| Image widget | Add a custom image widget to personalize your page. |
+| Quick links | Keep frequently used websites in one clean dashboard. |
+| Local setup | Runs locally through a simple `index.html` file. |
+| Lightweight | Built to stay fast, simple, and distraction-free. |
+| Customizable | Edit links, colors, themes, backgrounds, layout, and widgets. |
+| Cross-platform | Works on Linux, macOS, and experimental Windows setups. |
+
+---
+
+## Preview
+
+<p align="center">
+  <img width="1663" height="1102" alt="Startpage Preview 1" src="https://github.com/user-attachments/assets/5712ae31-7e24-446e-9add-487e199eb18c" />
+</p>
+
+<p align="center">
+  <img width="1663" height="1102" alt="Startpage Preview 2" src="https://github.com/user-attachments/assets/4ae3448d-1a72-4a59-a26d-4e6c9246acf2" />
+</p>
+
+---
+
+## Themes and Image Widget
+
+Startpage includes multiple built-in themes and an image widget so you can customize the look of your browser homepage.
+
+<p align="center">
+  <img width="233" height="496" alt="Mobile Theme Preview 1" src="https://github.com/user-attachments/assets/1a682997-4eed-4de2-9ced-b5a890f1a664" />
+  &nbsp;&nbsp;&nbsp;
+  <img width="267" height="571" alt="Mobile Theme Preview 2" src="https://github.com/user-attachments/assets/779ff4a8-5e55-418e-bcc5-498ad8cd4ed6" />
+</p>
+
+---
+
+## Installation
+
+<details open>
+<summary><strong>Linux</strong></summary>
+
+<br>
 
 Make sure `git` is installed first.
 
@@ -65,7 +97,7 @@ For Arch-based systems:
 sudo pacman -S git
 ```
 
-Then install Startpage:
+Clone and install Startpage:
 
 ```bash
 cd ~/Documents
@@ -75,7 +107,7 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-After the script finishes, open the `index.html` file in your browser:
+Open the startpage:
 
 ```bash
 xdg-open index.html
@@ -95,11 +127,14 @@ For Arch-based systems:
 sudo pacman -S xdg-utils
 ```
 
----
+</details>
 
-### macOS
+<details>
+<summary><strong>macOS</strong></summary>
 
-First, make sure Git is installed.
+<br>
+
+Make sure Git is installed.
 
 If Git is not installed, run:
 
@@ -107,7 +142,7 @@ If Git is not installed, run:
 xcode-select --install
 ```
 
-Then clone and install Startpage:
+Clone and install Startpage:
 
 ```bash
 cd ~/Documents
@@ -117,28 +152,28 @@ chmod +x setup-mac.sh
 ./setup-mac.sh
 ```
 
-To open the startpage manually:
+Open the startpage manually:
 
 ```bash
 open index.html
 ```
 
-> Note: macOS uses `open` instead of Linux’s `xdg-open`.  
-> If the setup script gives an `xdg-open` error on macOS, open `index.html` manually or replace `xdg-open` with `open` inside the script.
+macOS uses `open` instead of Linux’s `xdg-open`. If the setup script gives an `xdg-open` error, open `index.html` manually or replace `xdg-open` with `open` inside the script.
 
----
+</details>
 
-### Windows
+<details>
+<summary><strong>Windows</strong></summary>
+
+<br>
 
 Windows support is currently experimental and may not work perfectly yet.
 
 The recommended method is to use **Git Bash** or **WSL**.
 
-#### Option 1: Git Bash
+### Option 1: Git Bash
 
-1. Install Git for Windows.
-2. Open **Git Bash**.
-3. Run:
+Install Git for Windows, open Git Bash, then run:
 
 ```bash
 cd ~/Documents
@@ -148,9 +183,9 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-If the setup script does not work on Windows, you can still use the startpage manually.
+If the setup script does not work on Windows, open the startpage manually.
 
-Go into the folder:
+Go into:
 
 ```text
 Documents/start.page/startpage
@@ -164,13 +199,15 @@ index.html
 
 in your browser.
 
-#### Option 2: WSL
+### Option 2: WSL
 
 If you use Windows Subsystem for Linux, follow the Linux instructions inside your WSL terminal.
 
+</details>
+
 ---
 
-## ✦ Usage
+## Usage
 
 After installation, open:
 
@@ -178,42 +215,43 @@ After installation, open:
 index.html
 ```
 
-in your browser.
+You can use Startpage as:
 
-You can use it as:
-
-- Your browser homepage
+- A browser homepage
 - A custom new tab page
-- A local dashboard for quick navigation
+- A local navigation dashboard
+- A personalized browser landing page
 
 To make it your homepage, open your browser settings and set the homepage to the local `index.html` file.
 
 ---
 
-## ✦ Customization
+## Customization
 
-You can customize the startpage by editing the project files inside:
+You can customize Startpage by editing the project files inside:
 
 ```text
 start.page/startpage
 ```
 
-Common things you may want to change:
+Common things to change:
 
-- Links
-- Icons
-- Themes
-- Colors
-- Backgrounds
-- Image widget
-- Layout
-- Dark/light mode styling
+| Item | Description |
+|---|---|
+| Links | Edit the websites shown on the startpage. |
+| Icons | Change or replace shortcut icons. |
+| Themes | Modify existing themes or add new ones. |
+| Colors | Adjust the color palette to match your setup. |
+| Backgrounds | Change background colors or images. |
+| Image widget | Replace or customize the image widget. |
+| Layout | Adjust spacing, placement, and page structure. |
+| Mode styling | Edit dark and light mode styles. |
 
 After editing, refresh the browser page to see your changes.
 
 ---
 
-## ✦ Updating
+## Updating
 
 To update the project later, go into the repo folder and pull the newest version:
 
@@ -222,16 +260,25 @@ cd ~/Documents/start.page
 git pull
 ```
 
-Then rerun the setup script if needed:
+Then rerun the setup script if needed.
+
+Linux:
 
 ```bash
 cd startpage
 ./setup.sh
 ```
 
+macOS:
+
+```bash
+cd startpage
+./setup-mac.sh
+```
+
 ---
 
-## ✦ Troubleshooting
+## Troubleshooting
 
 ### `git: command not found`
 
@@ -258,6 +305,13 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
+For macOS:
+
+```bash
+chmod +x setup-mac.sh
+./setup-mac.sh
+```
+
 ---
 
 ### `xdg-open: command not found`
@@ -268,7 +322,7 @@ Install `xdg-utils` on Linux:
 sudo apt install xdg-utils
 ```
 
-or on Arch:
+For Arch-based systems:
 
 ```bash
 sudo pacman -S xdg-utils
@@ -288,19 +342,19 @@ Windows support is experimental. If the script does not run, open `index.html` m
 
 ---
 
-## ✦ Roadmap
+## Roadmap
 
-- Improve Windows support
-- Add easier customization options
-- Add more widgets
-- Add more themes
-- Add browser setup instructions
-- Improve mobile layout
-- Add more shortcuts and quick-access tools
+- [ ] Improve Windows support
+- [ ] Add easier customization options
+- [ ] Add more widgets
+- [ ] Add more themes
+- [ ] Add browser setup instructions
+- [ ] Improve mobile layout
+- [ ] Add more shortcuts and quick-access tools
 
 ---
 
-## ✦ Contributing
+## Contributing
 
 Contributions, ideas, and suggestions are welcome.
 
@@ -313,13 +367,13 @@ You can contribute by:
 
 ---
 
-## ✦ Credits
+## Credits
 
 Created by [realSPectr0](https://github.com/realSPectr0).
 
 ---
 
-## ✦ License
+## License
 
 This project is licensed under the MIT License.
 
