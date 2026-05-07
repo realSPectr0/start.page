@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """
 media-bridge.py
-───────────────
+
 WebSocket server on ws://localhost:7071
 - Pushes currently playing track to the startpage every 1.5s
 - Accepts POST /cmd { "cmd": "play-pause" | "next" | "previous" }
 
 Requirements:
-  pip install websockets --break-system-packages
-  sudo pacman -S playerctl
-
-Add to hyprland.conf:
-  exec-once = python3 ~/startpage/scripts/media-bridge.py
+  Linux: pip install websockets; playerctl
+  macOS: pip install websockets; Spotify or Music app for media data
 """
 
 import asyncio
 import json
+import platform
 import subprocess
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -24,6 +22,7 @@ import websockets
 WS_PORT   = 7071
 HTTP_PORT = 7072  # control commands come in here
 POLL_INTERVAL = 1.5
+IS_MACOS = platform.system() == "Darwin"
 
 
 def run(cmd):
@@ -34,16 +33,165 @@ def run(cmd):
         return ""
 
 
-def get_state():
+def run_args(args):
+    try:
+        r = subprocess.run(args, capture_output=True, text=True, timeout=3)
+        return r.stdout.strip()
+    except Exception:
+        return ""
+
+
+def osa(script):
+    return run_args(["/usr/bin/osascript", "-e", script])
+
+
+def normalize_status(status):
+    value = (status or "").strip().lower()
+    if value == "playing":
+        return "Playing"
+    if value == "paused":
+        return "Paused"
+    return "Stopped"
+
+
+def empty_state():
+    return {"status": "stopped", "title": "", "artist": "", "art": ""}
+
+
+def get_linux_state():
     status = run("playerctl status 2>/dev/null")
     if not status or "No players" in status:
-        return {"status": "stopped", "title": "", "artist": "", "art": ""}
+        return empty_state()
     return {
-        "status": status,
+        "status": normalize_status(status),
         "title":  run("playerctl metadata title  2>/dev/null"),
         "artist": run("playerctl metadata artist 2>/dev/null"),
         "art":    run("playerctl metadata mpris:artUrl 2>/dev/null"),
     }
+
+
+def app_running(app_name):
+    return osa(f'return application "{app_name}" is running').strip().lower() == "true"
+
+
+def spotify_state():
+    if not app_running("Spotify"):
+        return None
+
+    script = '''
+tell application "Spotify"
+  set playerState to player state as string
+  if playerState is "stopped" then
+    return playerState & linefeed & "" & linefeed & "" & linefeed & ""
+  end if
+  set trackName to name of current track
+  set trackArtist to artist of current track
+  set trackArt to artwork url of current track
+  return playerState & linefeed & trackName & linefeed & trackArtist & linefeed & trackArt
+end tell
+'''
+    return parse_macos_state("Spotify", osa(script))
+
+
+def music_state():
+    if not app_running("Music"):
+        return None
+
+    script = '''
+tell application "Music"
+  set playerState to player state as string
+  if playerState is "stopped" then
+    return playerState & linefeed & "" & linefeed & "" & linefeed & ""
+  end if
+  set trackName to name of current track
+  set trackArtist to artist of current track
+  return playerState & linefeed & trackName & linefeed & trackArtist & linefeed & ""
+end tell
+'''
+    return parse_macos_state("Music", osa(script))
+
+
+def parse_macos_state(source, raw):
+    if not raw:
+        return None
+
+    parts = raw.splitlines()
+    while len(parts) < 4:
+        parts.append("")
+
+    status, title, artist, art = parts[:4]
+    state = {
+        "status": normalize_status(status),
+        "title": title,
+        "artist": artist,
+        "art": art,
+        "source": source,
+    }
+    return state
+
+
+def get_macos_state():
+    states = [state for state in (spotify_state(), music_state()) if state]
+    if not states:
+        return empty_state()
+
+    playing = next((state for state in states if state["status"] == "Playing"), None)
+    selected = playing or states[0]
+    return {
+        "status": selected["status"],
+        "title": selected["title"],
+        "artist": selected["artist"],
+        "art": selected["art"],
+    }
+
+
+def get_state():
+    if IS_MACOS:
+        return get_macos_state()
+    return get_linux_state()
+
+
+def control_linux(cmd):
+    if cmd in ("play-pause", "next", "previous", "stop"):
+        run(f"playerctl {cmd}")
+
+
+def active_macos_app():
+    states = [state for state in (spotify_state(), music_state()) if state]
+    playing = next((state for state in states if state["status"] == "Playing"), None)
+    selected = playing or (states[0] if states else None)
+    if selected:
+        return selected["source"]
+    if app_running("Spotify"):
+        return "Spotify"
+    if app_running("Music"):
+        return "Music"
+    return ""
+
+
+def control_macos(cmd):
+    app_name = active_macos_app()
+    if not app_name:
+        return
+
+    command_map = {
+        "play-pause": "playpause",
+        "next": "next track",
+        "previous": "previous track",
+        "stop": "pause",
+    }
+    action = command_map.get(cmd)
+    if not action:
+        return
+
+    osa(f'tell application "{app_name}" to {action}')
+
+
+def control(cmd):
+    if IS_MACOS:
+        control_macos(cmd)
+    else:
+        control_linux(cmd)
 
 
 # ── Control HTTP server (for play/pause/next/prev from the page) ──────────────
@@ -63,8 +211,7 @@ class ControlHandler(BaseHTTPRequestHandler):
         try:
             data = json.loads(body)
             cmd  = data.get("cmd", "")
-            if cmd in ("play-pause", "next", "previous", "stop"):
-                run(f"playerctl {cmd}")
+            control(cmd)
         except Exception:
             pass
         self.send_response(200)

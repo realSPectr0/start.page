@@ -17,7 +17,11 @@
 
   function tick() {
     const now = new Date();
-    elTime.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const hours = now.getHours();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const displayHour = hours % 12 || 12;
+
+    elTime.textContent = `${displayHour}:${pad(now.getMinutes())} ${period}`;
     elDate.textContent = `${now.getDate()} ${MONTHS[now.getMonth()]}`;
     elDay.textContent  = DAYS[now.getDay()];
   }
