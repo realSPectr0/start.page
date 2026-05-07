@@ -102,7 +102,7 @@ Clone and install Startpage:
 ```bash
 cd ~/Documents
 git clone https://github.com/realSPectr0/start.page.git
-cd start.page/startpage
+cd start.page
 chmod +x setup.sh
 ./setup.sh
 ```
@@ -147,7 +147,7 @@ Clone and install Startpage:
 ```bash
 cd ~/Documents
 git clone https://github.com/realSPectr0/start.page.git
-cd start.page/startpage
+cd start.page
 chmod +x setup-mac.sh
 ./setup-mac.sh
 ```
@@ -178,7 +178,7 @@ Install Git for Windows, open Git Bash, then run:
 ```bash
 cd ~/Documents
 git clone https://github.com/realSPectr0/start.page.git
-cd start.page/startpage
+cd start.page
 chmod +x setup.sh
 ./setup.sh
 ```
